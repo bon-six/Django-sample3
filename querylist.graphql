@@ -1,0 +1,219 @@
+{
+    "query":
+    "mutation {
+        createLink (
+            url:\"http://one.more.a/\" 
+            description:\"with user login test\"
+        ) {
+            id 
+            url 
+            description 
+            postedBy {
+                id 
+                username 
+                email
+            }
+        }
+    }"
+}
+{
+    "query":
+    "query {
+        links {
+            id 
+            url 
+            description 
+            postedBy {
+                id 
+                username 
+                email
+            }
+        }
+    }"
+}
+{
+    "query":
+    "query {
+        users {
+            id 
+            username 
+            email 
+            password
+        }
+    }"
+}
+{
+    "query":
+    "query {
+        votes { 
+            link{
+                id 
+                url 
+                description 
+                postedBy{
+                    id 
+                    username
+                }
+            } 
+            user {
+                id 
+                username 
+                email 
+                password
+            }
+        }
+    }"
+}
+{
+    "query":
+    "mutation {
+        createVote (linkId: 6) {
+            link {
+                id 
+                url 
+                description
+            } 
+            user{
+                id 
+                username 
+                email
+            }
+        }
+    }"
+}
+{
+    "query":
+    "query {
+        links {
+            id 
+            url 
+            description 
+            postedBy {
+                id 
+                username 
+                email
+            }
+            votes {
+                id 
+                user {
+                    id 
+                    username
+                }
+            }
+        }
+    }"
+}
+{
+    "query":
+    "query {
+        links (search:\"test\"){
+            id 
+            url 
+            description 
+            postedBy {
+                id 
+                username 
+                email
+            }
+        }
+    }"
+}
+{
+    "query":
+    "query {
+        links (skip:2 first:2){
+            id 
+            url 
+            description 
+            postedBy {
+                id 
+                username
+                email
+            }
+        }
+    }"
+}
+
+{
+    "query":
+    "query {
+        relayLinks {
+            edges {
+                cursor
+                node {
+                    id
+                    url
+                    description
+                    votes {
+                        edges {
+                            node {
+                                id
+                                user {
+                                    id
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            pageInfo {
+                hasNextPage
+                hasPreviousPage
+                startCursor
+                endCursor
+            }
+            
+        }
+    }"
+}
+
+{
+    "query":
+    "query  {
+        relayLink(id: \"TGlua05vZGU6Mw==\") {
+            id
+            url
+            votes {
+                edges {
+                    cursor
+                    node{
+                        user{
+                            id
+                        }
+                    }
+                }
+                pageInfo{
+                    startCursor
+                }
+            }
+        }
+    }"
+}
+
+{
+    "query":
+    "query ($showVotes: Boolean!) {
+        relayLinks {
+            edges{
+                node{
+                    id
+                    url
+                    votes @include (if: $showVotes) {
+                        edges {
+                            cursor
+                            node{
+                                user{
+                                    id
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }",
+    "variables":
+    "{
+        \"showVotes\":false
+    }"
+}

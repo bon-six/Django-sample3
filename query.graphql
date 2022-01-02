@@ -1,0 +1,27 @@
+{
+    "query":
+    "query ($showVotes: Boolean!) {
+        relayLinks {
+            edges{
+                node{
+                    id
+                    url
+                    votes @include (if: $showVotes) {
+                        edges {
+                            cursor
+                            node{
+                                user{
+                                    id
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }",
+    "variables":
+    "{
+        \"showVotes\":false
+    }"
+}
